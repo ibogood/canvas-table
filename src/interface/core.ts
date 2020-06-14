@@ -1,14 +1,3 @@
-export interface Cell {
-    id: number; // 编号
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    colspan: number;
-    text: string;
-    row: number;
-    col: number;
-}
 // 缺省的单元格配置
 export interface DefaultCell {
     id?: number;
@@ -20,6 +9,17 @@ export interface DefaultCell {
     text?: string;
     row?: number;
     col?: number;
+}
+export interface Cell extends DefaultCell{
+    id: number; // 编号
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    colspan: number;
+    text: string;
+    row: number;
+    col: number;
 }
 export interface Row {
     cells: Cell[];

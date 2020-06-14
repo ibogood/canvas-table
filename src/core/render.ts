@@ -53,7 +53,24 @@ export default class Render {
         ctx.textBaseline = "middle";
         ctx.fillText(text, x + w / 2, y + h / 2);
     }
-    drawRow(cells: DefaultCell[], options: RowOption) {
+    redrawRow(rowObj: Row) {
+        if (!rowObj.cells || rowObj.cells.length === 0) {
+            return;
+        }
+        const cells = rowObj.cells;
+        // 清空一行单元格
+        this.clearRow(rowObj)
+        for (let i = 0; i < cells.length; i++) {
+            this.redrawCell(cells[i], false)
+        }
+    }
+    clearRow(rowObj: Row | number) {
+        if(typeof rowObj === 'number') {
+            rowObj = this.rows[rowObj - 1]
+        }
+        this.ctx.clearRect(rowObj.x, rowObj.y, rowObj.w, rowObj.h)
+    }
+    drawRow(cells: DefaultCell[], options: RowOption = {}) {
         if (!cells || cells.length === 0) {
             return;
         }
@@ -109,10 +126,12 @@ export default class Render {
         // 将 光标移动 到下 一个行开头
         this.moveCursor(cursorX, this.cursor.y, this.cursor.row + 1, 1)
     }
-    redrawCell(cell: Cell): void {
+    redrawCell(cell: Cell, isClear: boolean = true): void {
         const ctx = this.ctx;
         const { x, y, w, h } = cell
-        ctx.clearRect(x, y, w, h);
+        if (isClear) {
+            ctx.clearRect(x, y, w, h);
+        }
         this.drawCell(cell)
     }
     moveCursor(x: number, y: number, row: number, col: number) {
