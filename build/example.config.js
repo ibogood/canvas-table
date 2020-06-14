@@ -3,7 +3,7 @@ const { CleanWebpackPlugin }  = require('clean-webpack-plugin')
 //使用node的模块
 module.exports = {
     //这就是我们项目编译的入口文件
-    entry: "./src/index.ts",
+    entry: "./examples/main.ts",
     output: {
         filename: "main.js"
     },
@@ -40,7 +40,7 @@ module.exports = {
             cleanOnceBeforeBuildPatterns: ['./dist']
         }),
         new HtmlWebpackPlugin({
-            template: './src/public/index.html'
+            template: './examples/index.html'
         })
     ]
 }
